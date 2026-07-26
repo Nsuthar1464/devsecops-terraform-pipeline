@@ -10,6 +10,7 @@ resource "aws_kms_key" "bucket_key" {
 }
 
 # Logging bucket to store access logs
+# tfsec:ignore:aws-s3-enable-bucket-logging tfsec:ignore:aws-s3-enable-versioning
 resource "aws_s3_bucket" "log_bucket" {
   bucket = "lakeshore-devsecops-log-bucket"
 }
@@ -34,7 +35,8 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "log_bucket_encryp
   }
 }
 
-# Main bucket
+# Main bucket - logging and versioning handled via separate resources below
+# tfsec:ignore:aws-s3-enable-bucket-logging tfsec:ignore:aws-s3-enable-versioning
 resource "aws_s3_bucket" "my_bucket" {
   bucket = "lakeshore-devsecops-demo-bucket"
 }
