@@ -44,8 +44,8 @@ The workflow:
 
 The pipeline scans a `main.tf` file that provisions an AWS S3 bucket and a security group.
 
-![Repository created](s1-repo-created.png)
-![First Terraform file](s1-first-terraform.png)
+![Repository created](screenshots/s1-repo-created.png)
+![First Terraform file](screenshots/s1-first-terraform.png)
 
 ---
 
@@ -57,7 +57,7 @@ To demonstrate detection, the Terraform was given three realistic, serious misco
 - **No encryption** — data stored unencrypted at rest
 - **SSH open to the world** — a security group allowing port 22 from `0.0.0.0/0`, meaning any IP on earth could attempt to connect
 
-![Vulnerable Terraform](s2-vulnerable-terraform.png)
+![Vulnerable Terraform](screenshots/s2-vulnerable-terraform.png)
 
 ---
 
@@ -65,15 +65,15 @@ To demonstrate detection, the Terraform was given three realistic, serious misco
 
 On every push to `main`, the GitHub Actions pipeline runs tfsec and Checkov automatically. Against the insecure code, the scan **failed the build**, exactly as intended.
 
-![Pipeline failed, catching the flaws](s3-scan-failed.png)
+![Pipeline failed, catching the flaws](screenshots/s3-scan-failed.png)
 
 tfsec reported **11 problems** across severity levels, including a **critical** finding:
 
-![Scan severity summary](s3-scan-summary.png)
+![Scan severity summary](screenshots/s3-scan-summary.png)
 
 The critical finding pinpointed the exact line exposing SSH to the public internet, with the impact and recommended fix:
 
-![Critical finding detail](s3-scan-findings.png)
+![Critical finding detail](screenshots/s3-scan-findings.png)
 
 **The trigger:** the pipeline runs on every `push` to `main`, regardless of whether the code is good or bad. It always scans, then reports pass or fail. That is what makes the security automatic rather than something a human has to remember.
 
@@ -95,7 +95,7 @@ For the remaining low-priority findings (cross-region replication, event notific
 
 The result: a passing pipeline, with the full commit history showing the remediation journey from red to green.
 
-![Pipeline passing](s4-scan-passed.png)
+![Pipeline passing](screenshots/s4-scan-passed.png)
 
 ---
 
